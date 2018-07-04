@@ -74,15 +74,20 @@ kbd:hover > button {
 }
 
 kbd > img {
-    display: none;
-} 
 
-kbd:hover > img {
     position: absolute;
     left: 4px;
     bottom: 4px;
     width: 20px;
     height: 20px;
-    display: inline-block;
-}
+} 
+
+/* kbd:hover > img {
+    position: absolute;
+    left: 4px;
+    bottom: 4px;
+    width: 20px;
+    height: 20px;
+    /* display: inline-block; */
+} */
 

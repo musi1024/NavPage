@@ -1,48 +1,40 @@
 // 1.初始化
-var keys = {
-    '0' : ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
-    '1' : ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
-    '2' : ['z', 'x', 'c', 'v', 'b', 'n', 'm'],
-    'length': 3,
-}
+var mainHash = init()
+var keys = mainHash['keys']
+var hash = mainHash['hash']
 
-var hash = {
-    'q': 'qq.com',
-    'w': 'weibo.com',
-    'r': 'ruanyifeng.com',
-    't': 'taobao.com',
-    'y': 'youku.com',
-    'i': 'iqiyi.com',
-}
+// 2.生成键盘
+keyboard(keys, hash)
 
-var hashInLocalStorage = getFromLocalStorage('website')
-if (hashInLocalStorage) {
-    hash = hashInLocalStorage
-}
+// 3.监听键盘
+listenToUser(hash)
 
-for (var index1 = 0; index1 < keys.length; index1++) {
-    var div = dc('div')
-    kb.appendChild(div)
-    var row = keys[index1]
-    for (var index2 = 0; index2 < keys[index1].length; index2++) {
-        
-        var editorButton = createEditorButton(row[index2])
 
-        var websiteIcon = addWebsiteIcon(hash[row[index2]])
-
-        var kbd = createKbd(row[index2]) 
-          
-        div.appendChild(kbd)
-        kbd.appendChild(editorButton)
-        kbd.appendChild(websiteIcon)  
+function init() {
+    var keys = {
+        '0' : ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
+        '1' : ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
+        '2' : ['z', 'x', 'c', 'v', 'b', 'n', 'm'],
+        'length': 3,
     }
-}
-
-document.onkeypress = function(even) {
-    var key = even.key
-    if (hash[key] != undefined) {
-        window.open('http://' + hash[key]) 
-    }   
+    
+    var hash = {
+        'q': 'qq.com',
+        'w': 'weibo.com',
+        'r': 'ruanyifeng.com',
+        't': 'taobao.com',
+        'y': 'youku.com',
+        'i': 'iqiyi.com',
+    }
+    
+    var hashInLocalStorage = getFromLocalStorage('website')
+    if (hashInLocalStorage) {
+        hash = hashInLocalStorage
+    }
+    return {
+        'keys': keys,
+        'hash': hash,
+    }
 }
 
 function getFromLocalStorage(name) {
@@ -53,36 +45,57 @@ function dc(tagName) {
     return document.createElement(tagName)
 }
 
+function keyboard(keys, hash) {
+    for (var index1 = 0; index1 < keys.length; index1++) {
+        var div = dc('div')
+        kb.appendChild(div)
+        var row = keys[index1]
+        for (var index2 = 0; index2 < keys[index1].length; index2++) {
+            
+            var editorButton = createEditorButton(row[index2])
+    
+            var websiteIcon = addWebsiteIcon(hash[row[index2]])
+    
+            var kbd = createKbd(row[index2]) 
+              
+            kbd.appendChild(editorButton)
+            kbd.appendChild(websiteIcon)  
+    
+            div.appendChild(kbd)
+        }
+    }
+}
+
 function createEditorButton(id) {
     var editorButton = dc('button')
-        editorButton.textContent = 'E'
-        editorButton.id = id
-        editorButton.onclick = function(even) {
+    editorButton.textContent = 'E'
+    editorButton.id = id
+    editorButton.onclick = function(even) {
+        var e = even.target
+        var newIcon = e.previousSibling
+        var newWebsite = prompt('请输入你所要修改的网址')
+        hash[e.id] = newWebsite   
+        newIcon.src = 'http://' + newWebsite + '/favicon.ico'
+        newIcon.onerror =function(even) {
             var e = even.target
-            var newWebsite = prompt('请输入你所要修改的网址')
-            hash[e.id] = newWebsite
-            var newIcon = e.previousSibling
-            newIcon.src = 'http://' + hash[row[index2]] + '/favicon.ico'
-            newIcon.onerror =function(even) {
-                var e = even.target
-                e.src = 'img/wrong.jpg'
-            }
-            localStorage.setItem('website', JSON.stringify(hash))
+            e.src = 'img/wrong.jpg'
         }
+        localStorage.setItem('website', JSON.stringify(hash))
+    }
     return editorButton
 }
 
 function addWebsiteIcon(domain) {
     var websiteIcon = dc('img')
-        if (domain !=undefined) {
-            websiteIcon.src = 'http://' + domain + '/favicon.ico' 
-        } else {
-            websiteIcon.src = 'img/wrong.jpg'
-        }
-        websiteIcon.onerror =function(even) {
-            var e = even.target
-            e.src = 'img/wrong.jpg'
-        }
+    if (domain != undefined) {
+        websiteIcon.src = 'http://' + domain + '/favicon.ico' 
+    } else {
+        websiteIcon.src = 'img/wrong.jpg'
+    }
+    websiteIcon.onerror =function(even) {
+        var e = even.target
+        e.src = 'img/wrong.jpg'
+    }
     return websiteIcon
 }
 
@@ -97,4 +110,13 @@ function createKbd(className) {
         }
     }
     return kbd
+}
+
+function listenToUser(hash) {
+    document.onkeypress = function(even) {
+        var key = even.key
+        if (hash[key] != undefined) {
+            window.open('http://' + hash[key]) 
+        }   
+    }
 }
