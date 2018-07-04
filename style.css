@@ -7,39 +7,82 @@ a {
     text-decoration: none;
 }
 
+body {
+    background-image: url(img/alum.png);
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
 #kb {
     text-align: center;
 }
 
-main #kb > div:nth-child(2) {
-    margin-left: 0.4em;
+#kb > div:nth-child(2) {
+    margin-left: -33px;
 }
 
-main #kb > div:nth-child(3) {
-    margin-left: 1.3em;
+#kb > div:nth-child(3) {
+    margin-left: -119px;
 }
 
 kbd {
-    border: 1px solid red;
+    background-color: black;
+    color: white;
     width: 70px;
     height: 70px;
+    line-height: 70px;
     display: inline-block;
     text-transform: uppercase;
     position: relative;
+    margin: 6px;
+    font-size: 22px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: keyboard;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5)
 }
 
+kbd:active {
+    top: 2px;
+    box-shadow: 2px 0 2px rgba(0, 0, 0, 0.5);
+  }
+
 kbd > button {
-    position: absolute;
-    right: 0;
-    bottom: 0;
     display: none;
 }
 
 kbd:hover > button {
+    font-size: 12px;
+    color: black;
+    background-color: white;
     position: absolute;
     right: 0;
     bottom: 0;
     display: inline-block;
+    border: none;
+    border-bottom-right-radius: 8px;
+    border-top-left-radius: 4px;
+    width: 14px;
+    height: 14px;
+    font-weight: 700;
+    cursor: pointer;
 }
 
+kbd > img {
+    display: none;
+} 
+
+kbd:hover > img {
+    position: absolute;
+    left: 4px;
+    bottom: 4px;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+}
 
