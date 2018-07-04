@@ -54,16 +54,12 @@ kbd:active {
 
 kbd > button {
     display: none;
-}
-
-kbd:hover > button {
     font-size: 12px;
     color: black;
     background-color: white;
     position: absolute;
     right: 0;
     bottom: 0;
-    display: inline-block;
     border: none;
     border-bottom-right-radius: 8px;
     border-top-left-radius: 4px;
@@ -73,21 +69,20 @@ kbd:hover > button {
     cursor: pointer;
 }
 
-kbd > img {
+kbd:hover > button {
+    display: inline-block;
+}
 
+kbd > img {
     position: absolute;
     left: 4px;
     bottom: 4px;
     width: 20px;
     height: 20px;
+    display: none;
 } 
 
-/* kbd:hover > img {
-    position: absolute;
-    left: 4px;
-    bottom: 4px;
-    width: 20px;
-    height: 20px;
-    /* display: inline-block; */
-} */
+kbd:hover > img {
+    display: inline-block;
+} 
 

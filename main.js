@@ -57,10 +57,10 @@ function keyboard(keys, hash) {
             var websiteIcon = addWebsiteIcon(hash[row[index2]])
     
             var kbd = createKbd(row[index2]) 
-              
+
+            kbd.appendChild(websiteIcon)   
             kbd.appendChild(editorButton)
-            kbd.appendChild(websiteIcon)  
-    
+             
             div.appendChild(kbd)
         }
     }
@@ -74,9 +74,11 @@ function createEditorButton(id) {
         var e = even.target
         var newIcon = e.previousSibling
         var newWebsite = prompt('请输入你所要修改的网址')
-        hash[e.id] = newWebsite   
+        console.log(newIcon.src)
         newIcon.src = 'http://' + newWebsite + '/favicon.ico'
-        newIcon.onerror =function(even) {
+        hash[e.id] = newWebsite   
+        
+        newIcon.onerror = function(even) {
             var e = even.target
             e.src = 'img/wrong.jpg'
         }
@@ -92,7 +94,7 @@ function addWebsiteIcon(domain) {
     } else {
         websiteIcon.src = 'img/wrong.jpg'
     }
-    websiteIcon.onerror =function(even) {
+    websiteIcon.onerror = function(even) {
         var e = even.target
         e.src = 'img/wrong.jpg'
     }
