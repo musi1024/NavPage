@@ -9,7 +9,6 @@ keyboard(keys, hash)
 // 3.监听键盘
 listenToUser(hash)
 
-
 function init() {
     var keys = {
         '0' : ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
@@ -31,6 +30,7 @@ function init() {
     if (hashInLocalStorage) {
         hash = hashInLocalStorage
     }
+
     return {
         'keys': keys,
         'hash': hash,
@@ -51,7 +51,7 @@ function keyboard(keys, hash) {
         kb.appendChild(div)
         var row = keys[index1]
         for (var index2 = 0; index2 < keys[index1].length; index2++) {
-            
+
             var editorButton = createEditorButton(row[index2])
     
             var websiteIcon = addWebsiteIcon(hash[row[index2]])
@@ -90,7 +90,7 @@ function createEditorButton(id) {
 function addWebsiteIcon(domain) {
     var websiteIcon = dc('img')
     if (domain != undefined) {
-        websiteIcon.src = 'http://' + domain + '/favicon.ico' 
+        websiteIcon.src = 'https://' + domain + '/favicon.ico' 
     } else {
         websiteIcon.src = 'img/wrong.jpg'
     }
@@ -108,7 +108,7 @@ function createKbd(className) {
     kbd.onclick = function(even) {
         var e = even.target
         if (hash[e.className] != undefined) {
-            window.open('http://' + hash[e.className]) 
+            window.open('https://' + hash[e.className]) 
         }
     }
     return kbd
@@ -118,7 +118,7 @@ function listenToUser(hash) {
     document.onkeypress = function(even) {
         var key = even.key
         if (hash[key] != undefined) {
-            window.open('http://' + hash[key]) 
+            window.open('https://' + hash[key]) 
         }   
     }
 }
